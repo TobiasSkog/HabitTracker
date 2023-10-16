@@ -214,6 +214,39 @@ namespace HabitTracker.Database
                 }
             }
         }
+        public static int GetHighestId()
+        {
+            int highestId = 0;
+
+            using (SQLiteConnection connection = new(connectionString))
+            {
+                connection.Open();
+                string getHighestId = @"
+                        SELECT id 
+                        FROM habits
+                        ORDER BY id DESC LIMIT 1
+                        ";
+
+                using (SQLiteCommand command = new(getHighestId, connection))
+                {
+
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(reader.GetOrdinal("id"));
+                            if (id > highestId)
+                            {
+                                highestId = id;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return highestId;
+        }
+
 
 
 

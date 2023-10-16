@@ -31,8 +31,7 @@ Type 5 to Update Record.";
                 Console.WriteLine(Menu);
                 List<Habit> habits;
                 Habit habit;
-                int id;
-                int choice = UserChoice();
+                int id, maxRange, choice = UserChoice();
 
                 switch (choice)
                 {
@@ -47,7 +46,8 @@ Type 5 to Update Record.";
                         break;
                     case 2:
                         Console.Clear();
-                        id = InputValidation.GetIntegerRange("\nSpecify the ID of the Habit you would like to view: ", 0, 100);
+                        maxRange = Database.DatabaseHelper.GetHighestId();
+                        id = InputValidation.GetIntegerRange($"\nSpecify the ID of the Habit you would like to view (1 - {maxRange}): ", 1, maxRange);
                         habit = Database.DatabaseHelper.GetSpecificHabitByIdFromDB(id);
                         PresentSingularHabitToUser(habit);
                         break;
@@ -60,14 +60,16 @@ Type 5 to Update Record.";
                     case 4:
                         // Delete Record
                         Console.Clear();
-                        id = InputValidation.GetIntegerRange("\nSpecify the ID of the Habit you would like to delete: ", 0, 100);
+                        maxRange = Database.DatabaseHelper.GetHighestId();
+                        id = InputValidation.GetIntegerRange($"\nSpecify the ID of the Habit you would like to delete (1 - {maxRange}): ", 1, maxRange);
                         Database.DatabaseHelper.RemoveSpecificHabitByIdFromDB(id);
                         break;
                     case 5:
                         // Update Record
                         Console.Clear();
+                        maxRange = Database.DatabaseHelper.GetHighestId();
                         //GET THE ID OF THE HABIT THE USER WANTS TO UPDATE
-                        id = InputValidation.GetIntegerRange("\nSpecify the ID of the Habit you would like to update: ", 0, 100);
+                        id = InputValidation.GetIntegerRange($"\nSpecify the ID of the Habit you would like to update (1 - {maxRange}): ", 1, maxRange);
                         //GET THE HABIT FROM DATABSE
                         habit = Database.DatabaseHelper.GetSpecificHabitByIdFromDB(id);
                         //MODIFY THE HABIT
