@@ -13,6 +13,7 @@ Type 2 to View a Specific Record.
 Type 3 to Insert Record.
 Type 4 to Delete Record.
 Type 5 to Update Record.";
+
         private static string rowLine = "=========================================";
 
 
